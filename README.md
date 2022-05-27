@@ -35,10 +35,11 @@ yarn install
 yarn start
 ```
 
-- 아래 명령어로 json-server 실행. localhost:3000 포트에 REST API 서버가 실행됨
+- 아래 명령어로 json-server 실행. (`npx json-server --watch db.json` 실행됨)
+- localhost:3000 포트에 API 서버가 실행됨
 
 ```
-npx json-server --watch db.json
+yarn server
 ```
 
 ### 2) 프로젝트 빌드
