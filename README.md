@@ -1,16 +1,20 @@
+## 프로젝트 상세 설명 링크 바로가기
+
+- https://findainc.atlassian.net/l/c/JzR902gi
+
 ## 프로젝트 설명
 
-- react 게시판 프로젝트 (2단계 게시판 만들기)
+- react 게시판 프로젝트 (3단계 게시판 만들기)
 - 온보딩 참고: https://findainc.atlassian.net/wiki/spaces/FF/pages/2121170954/OnBoarding
-- 기존 Redux를 Mobx로 변경
-- 기존 styled-components를 postcss, tailwind로 변경
+- 기존 React 앱에 Next.js 추가
+- 기존 mobX를 다시 Redux로 변경.
+- Redux, Redux-Saga, RTK Query 관련 코드 리팩토링
 
 ## 사용 스택
 
-- TypeScript
-- React
+- TypeScript, React, Next.js
 - babel, webpack, eslint
-- MobX
+- Redux, Redux-saga
 - postcss, tailwind CSS
 - json-server
 - cypress
