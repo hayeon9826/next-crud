@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import { useStores } from '../../store/rootContext';
 import dayjs from 'dayjs';
 
-const TodoPage = () => {
+const TodoPage: React.FC = () => {
   const [title, setTitle] = useState('');
   const { todoStore } = useStores();
 

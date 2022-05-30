@@ -1,7 +1,5 @@
 // interface 타입 정의 (선언적 확장 가능)
 
-import { AxiosResponse } from 'axios';
-
 export interface Post {
   id?: number;
   user: string;
@@ -14,6 +12,13 @@ export interface Todo {
   id?: number;
   title: string;
   finished: boolean;
+}
+
+export interface Faq {
+  id?: number;
+  position: number;
+  title: string;
+  body: string;
 }
 
 export interface ToggleTodo {
@@ -40,7 +45,7 @@ export interface buttonProps {
 
 export interface PostStoreType {
   posts: Post[];
-  error: string | unknown;
+  error?: string;
   getPosts(): void;
   addPost(title: string, body: string, user: string, date: string): void;
   removePost(id: number): void;
@@ -48,9 +53,15 @@ export interface PostStoreType {
   updateError({ error }: any): void;
 }
 
+export interface FaqStoreType {
+  faqs: Faq[];
+  error?: string;
+  getFaqs(): void;
+}
+
 export interface TodoStoreType {
   todos: Todo[];
-  error: string | unknown;
+  error?: string;
   getTodos(): void;
   addTodo(title: string): void;
   removeTodo(id: number): void;
@@ -69,4 +80,5 @@ export interface RootStoreType {
   postStore: PostStoreType;
   todoStore: TodoStoreType;
   numberStore: NumberStoreType;
+  faqStore: FaqStoreType;
 }

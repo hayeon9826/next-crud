@@ -46,7 +46,9 @@ const Navbar: React.FC = () => {
                 <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
                   <div className="flex-shrink-0 flex items-center">
                     <Link href="/">
-                      <span className="text-indigo-500 text-2xl font-bold">finda</span>
+                      <span className="text-indigo-500 text-2xl font-bold cursor-pointer">
+                        finda
+                      </span>
                     </Link>
                   </div>
                   <div className="hidden sm:block sm:ml-6">

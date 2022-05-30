@@ -1,37 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { BASE_URL } from '../../lib/api';
 import { useStores } from '../../store/rootContext';
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { toast } from 'react-toastify';
+import { Post } from 'interface';
 
-const PostShow: React.FC = () => {
+const PostShow: React.FC<{ post: Post }> = ({ post }) => {
   // URL 인자들의 key/value(키/값) 짝들의 객체를 반환
   // const params = useParams();
   const router = useRouter();
-  const params = router.query;
   const { postStore } = useStores();
-  const [post, setPost] = useState({
-    id: 0,
-    user: '',
-    title: '',
-    body: '',
-    date: ''
-  });
-
-  useEffect(() => {
-    const fetch = async () => {
-      const res = await axios({
-        url: `${BASE_URL}/post/${params.id}`
-      });
-      await setPost(res.data);
-    };
-    if (params.id) {
-      fetch();
-    }
-    window.scrollTo(0, 0);
-  }, [params]);
 
   const handleDelete = async () => {
     try {
@@ -83,5 +63,27 @@ const PostShow: React.FC = () => {
     </div>
   );
 };
+
+export async function getStaticPaths() {
+  const response = await axios({ url: `${BASE_URL}/post` });
+  const data = await response.data;
+
+  const paths = data.map(({ id }: Post) => ({
+    params: { id: String(id) }
+  }));
+
+  return { paths, fallback: false };
+}
+
+export async function getStaticProps({ params }) {
+  const response: AxiosResponse = await axios({
+    url: `${BASE_URL}/post/${params.id}`
+  });
+
+  const post: Post = response.data;
+
+  // Pass post data to the page via props
+  return { props: { post } };
+}
 
 export default PostShow;

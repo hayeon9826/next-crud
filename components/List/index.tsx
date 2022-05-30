@@ -3,14 +3,20 @@ import { Observer } from 'mobx-react';
 import Link from 'next/link';
 import { Post } from '../../interface';
 import { useStores } from '../../store/rootContext';
+import { toast } from 'react-toastify';
 
 const List: React.FC = () => {
   const { postStore } = useStores();
+  const { error } = postStore;
 
   useEffect(() => {
     // page mount시 mobX 데이터 fetching
     postStore.getPosts();
   }, []);
+
+  if (error) {
+    toast(error);
+  }
 
   return (
     <Observer>

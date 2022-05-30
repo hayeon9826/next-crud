@@ -6,7 +6,7 @@ import { AxiosResponse } from 'axios';
 export class PostStore implements PostStoreType {
   rootStore;
   posts: Post[] = [];
-  error: string | null = null;
+  error = '';
 
   constructor(root: any) {
     makeObservable(this, {
@@ -28,8 +28,7 @@ export class PostStore implements PostStoreType {
   *getPosts() {
     try {
       const response: AxiosResponse = yield API.getPosts();
-      const post = response.data;
-      this.posts = post;
+      this.posts = response.data;
     } catch (e) {
       console.log(e);
       this.updateError({ error: '후기 리스트를 가져올 수 없습니다. 다시 시도해주세요.' });

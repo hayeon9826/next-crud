@@ -1,7 +1,8 @@
+import React from 'react';
 import { Observer } from 'mobx-react';
 import { useStores } from '../../store/rootContext';
 
-const CounterPage = () => {
+const CounterPage: React.FC = () => {
   const { numberStore } = useStores();
 
   const onClickIncrease = () => {

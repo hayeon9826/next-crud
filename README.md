@@ -35,8 +35,7 @@ yarn install
 - 아래 명령어 입력 후, localhost:8080 접속
 
 ```
-yarn install
-yarn start
+yarn dev
 ```
 
 - 아래 명령어로 json-server 실행. (`npx json-server --watch db.json` 실행됨)
