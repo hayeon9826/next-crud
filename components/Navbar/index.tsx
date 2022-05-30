@@ -16,6 +16,7 @@ const Navbar: React.FC = () => {
     { name: '게시판', href: '/', current: router.pathname === '/' },
     { name: 'To-do 리스트', href: '/todos', current: router.pathname === '/todos' },
     { name: '카운터', href: '/counters', current: router.pathname === '/counters' },
+    { name: 'FAQ', href: '/faqs', current: router.pathname === '/faqs' },
     { name: '404', href: '/404', current: router.pathname === '/404' }
   ];
 

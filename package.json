@@ -5,9 +5,10 @@
   "main": "index.tsx",
   "scripts": {
     "build": "next build",
-    "start": "webpack serve",
+    "start": "next start -p 8080",
     "dev": "next dev -p 8080",
     "server": "npx json-server --watch db.json",
+    "lint": "next lint",
     "cypress": "cypress open"
   },
   "repository": {
@@ -47,6 +48,7 @@
     "@babel/preset-react": "^7.16.7",
     "@babel/preset-typescript": "^7.16.7",
     "@bahmutov/add-typescript-to-cypress": "^2.1.2",
+    "@next/eslint-plugin-next": "^12.1.6",
     "@types/node": "^17.0.33",
     "@types/react": "^18.0.9",
     "@types/react-dom": "^18.0.3",

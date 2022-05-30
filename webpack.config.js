@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 // eslint-disable-next-line no-undef
 module.exports = {
-  entry: './src/index.tsx',
+  entry: './pages/index.tsx',
   mode: process.env.NODE_ENV || 'development',
   resolve: {
     extensions: ['.tsx', '.ts', '.js']
