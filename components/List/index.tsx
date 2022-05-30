@@ -4,8 +4,10 @@ import Link from 'next/link';
 import { Post } from '../../interface';
 import { useStores } from '../../store/rootContext';
 import { toast } from 'react-toastify';
+import * as API from '../../lib/api';
+import { AxiosResponse } from 'axios';
 
-const List: React.FC = () => {
+const List: React.FC<{ posts: Post[] }> = ({ posts }) => {
   const { postStore } = useStores();
   const { error } = postStore;
 
@@ -33,8 +35,8 @@ const List: React.FC = () => {
                 </Link>
               </div>
               <div className="grid_div">
-                {postStore.posts && postStore.posts.length ? (
-                  postStore.posts.map((data: Post) => (
+                {posts && posts.length ? (
+                  posts.map((data: Post) => (
                     <div
                       className="shadow-md hover:shadow-xl cursor-pointer bg-white rounded-lg relative flex p-6 items-start flex-col md:w-[380px] lg:w-[380px] xl:w-[380px] w-full h-[300px]"
                       key={data.id}>
@@ -64,5 +66,13 @@ const List: React.FC = () => {
     </Observer>
   );
 };
+
+export async function getServerSideProps() {
+  const response: AxiosResponse = await API.getPosts();
+  const posts: Post = response.data;
+
+  // Pass post data to the page via props
+  return { props: { posts } };
+}
 
 export default List;

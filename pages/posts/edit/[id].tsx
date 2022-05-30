@@ -4,9 +4,10 @@ import { useRouter } from 'next/router';
 import { BASE_URL } from '../../../lib/api';
 import { toast } from 'react-toastify';
 import { useStores } from '../../../store/rootContext';
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
+import { Post } from 'interface';
 
-const PostEdit: React.FC = () => {
+const PostEdit: React.FC<{ post: Post }> = ({ post }) => {
   // URL 인자들의 key/value(키/값) 짝들의 객체를 반환
   const [form, setForm] = useState({
     title: '',
@@ -15,18 +16,9 @@ const PostEdit: React.FC = () => {
     date: dayjs().format('YYYY-MM-DD')
   });
 
-  const [post, setPost] = useState({
-    id: 0,
-    user: '',
-    title: '',
-    body: '',
-    date: ''
-  });
-
   const { postStore } = useStores();
   const inputRef = useRef() as React.MutableRefObject<HTMLInputElement>;
   const router = useRouter();
-  const params = router.query;
 
   const handleChange =
     (prop: string) =>
@@ -35,17 +27,8 @@ const PostEdit: React.FC = () => {
     };
 
   useEffect(() => {
-    const fetch = async () => {
-      const res = await axios({
-        url: `${BASE_URL}/post/${params.id}`
-      });
-      await setPost(res.data);
-    };
-    if (params.id) {
-      fetch();
-    }
     window.scrollTo(0, 0);
-  }, [params]);
+  }, []);
 
   useEffect(() => {
     if (post?.id) {
@@ -137,5 +120,27 @@ const PostEdit: React.FC = () => {
     </div>
   );
 };
+
+export async function getStaticPaths() {
+  const response = await axios({ url: `${BASE_URL}/post` });
+  const data = await response.data;
+
+  const paths = data.map(({ id }: Post) => ({
+    params: { id: String(id) }
+  }));
+
+  return { paths, fallback: false };
+}
+
+export async function getStaticProps({ params }) {
+  const response: AxiosResponse = await axios({
+    url: `${BASE_URL}/post/${params.id}`
+  });
+
+  const post: Post = response.data;
+
+  // Pass post data to the page via props
+  return { props: { post } };
+}
 
 export default PostEdit;
