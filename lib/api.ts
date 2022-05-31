@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { Post, Todo, updatePostProps } from '../interface';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 // json-server 호스트 url
 export const BASE_URL = 'http://localhost:3000';
@@ -16,6 +17,20 @@ const headerConfig = {
 };
 
 const API = axios.create(headerConfig);
+
+// rtk query 정의 (fetch)
+export const getPostApi = createApi({
+  reducerPath: 'getPostApi',
+  baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
+  endpoints: (builder) => ({
+    getPosts: builder.query<Post, string>({
+      query: (query) => (query ? `post/${query}` : `post/?_sort=id&_order=DESC&_limit=100`)
+    }),
+    getPost: builder.query<Post, string>({
+      query: (id) => `post/${id}`
+    })
+  })
+});
 
 // 기본 CRUD axios 정의
 export const createPost = ({ title, body, user, date }: Post) =>

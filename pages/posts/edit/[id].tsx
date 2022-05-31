@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { GetServerSideProps } from 'next';
 import dayjs from 'dayjs';
 import { useRouter } from 'next/router';
 import { BASE_URL } from '../../../lib/api';
@@ -121,26 +122,36 @@ const PostEdit: React.FC<{ post: Post }> = ({ post }) => {
   );
 };
 
-export async function getStaticPaths() {
-  const response = await axios({ url: `${BASE_URL}/post` });
-  const data = await response.data;
+// export const getStaticPaths: GetStaticPaths = async () => {
+//   const response = await axios({ url: `${BASE_URL}/post` });
+//   const data = await response.data;
 
-  const paths = data.map(({ id }: Post) => ({
-    params: { id: String(id) }
-  }));
+//   const paths = data.map(({ id }: Post) => ({
+//     params: { id: String(id) }
+//   }));
 
-  return { paths, fallback: false };
-}
+//   return { paths, fallback: false };
+// };
 
-export async function getStaticProps({ params }) {
+// export const getStaticProps: GetStaticProps = async ({ params }) => {
+//   const response: AxiosResponse = await axios({
+//     url: `${BASE_URL}/post/${params.id}`
+//   });
+
+//   const post: Post = response.data;
+
+//   // Pass post data to the page via props
+//   return { props: { post } };
+// };
+
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const response: AxiosResponse = await axios({
     url: `${BASE_URL}/post/${params.id}`
   });
 
   const post: Post = response.data;
-
   // Pass post data to the page via props
   return { props: { post } };
-}
+};
 
 export default PostEdit;

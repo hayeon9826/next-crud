@@ -71,6 +71,7 @@ yarn cypress
 4. 게시글 삭제
 5. 카운터 예제 구현
 6. To-do 리스트 예제 구현
+7. FAQ 페이지 구현
 
 ## 사진 첨부
 
@@ -134,6 +135,20 @@ yarn cypress
     <tr>
       <td> <img src="https://user-images.githubusercontent.com/38210233/169699288-514a3be2-4904-4b68-98fb-844aed3521a3.png"  alt="finda todo list" ></td>
        <td><img src="https://user-images.githubusercontent.com/38210233/169699308-e4db8444-159f-47a1-a484-b010ff713e72.png" alt="finda counter"></td>
+    </tr> 
+  </tbody>
+</table>
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">FAQ 페이지</th>
+      <th style="text-align: center">404 페이지</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td> <img src="https://user-images.githubusercontent.com/38210233/171079427-cb95122f-1c7d-4c1d-89a2-70bf31931d9b.png"  alt="finda faq list" ></td>
+       <td><img src="https://user-images.githubusercontent.com/38210233/171079464-ecc67591-312b-4f20-a423-8ce84506f454.png" alt="finda 404"></td>
     </tr> 
   </tbody>
 </table>

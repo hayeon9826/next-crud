@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ChevronUpIcon, ChevronDownIcon } from '@heroicons/react/outline';
 import { Faq } from 'interface';
+import { GetStaticProps } from 'next';
 import * as API from '../../lib/api';
 import { AxiosResponse } from 'axios';
 
@@ -72,12 +73,13 @@ const FaqPage: React.FC<{ faqs: Faq[] }> = ({ faqs }) => {
   );
 };
 
-export async function getStaticProps() {
+export const getStaticProps: GetStaticProps = async () => {
   const response: AxiosResponse = await API.getFaqs();
   const faqs: Faq = response.data;
 
   // Pass faq data to the page via props
   return { props: { faqs } };
-}
+  // ...
+};
 
 export default FaqPage;

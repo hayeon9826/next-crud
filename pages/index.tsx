@@ -1,4 +1,5 @@
 import React from 'react';
+import { GetServerSideProps } from 'next';
 import List from '../components/List';
 import 'react-toastify/dist/ReactToastify.css';
 import { AxiosResponse } from 'axios';
@@ -11,12 +12,12 @@ const Home: React.FC<{ posts: Post[] }> = ({ posts }) => (
   </>
 );
 
-export async function getServerSideProps() {
+export const getServerSideProps: GetServerSideProps = async () => {
   const response: AxiosResponse = await API.getPosts();
   const posts: Post = response.data;
 
   // Pass post data to the page via props
   return { props: { posts } };
-}
+};
 
 export default Home;
