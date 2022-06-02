@@ -4,6 +4,7 @@ import { setupListeners } from '@reduxjs/toolkit/query';
 import posts from '../slices/post';
 import form from '../slices/form';
 import todos from '../slices/todo';
+import counter from '../slices/counter';
 import rootSaga from '../sagas/saga';
 import { getPostApi } from '../lib/api';
 
@@ -14,6 +15,7 @@ export const store = configureStore({
     posts,
     form,
     todos,
+    counter,
     // getPostApi top-level slice에서 생성된 리듀서를 추가
     [getPostApi.reducerPath]: getPostApi.reducer
   },

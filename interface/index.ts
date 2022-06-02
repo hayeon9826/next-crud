@@ -14,6 +14,10 @@ export interface Todo {
   finished: boolean;
 }
 
+export interface Counter {
+  num: number;
+}
+
 export interface Faq {
   id?: number;
   position: number;

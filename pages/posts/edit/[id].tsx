@@ -4,7 +4,6 @@ import dayjs from 'dayjs';
 import { useRouter } from 'next/router';
 import { BASE_URL } from '../../../lib/api';
 import { toast } from 'react-toastify';
-import { useStores } from '../../../store/rootContext';
 import axios, { AxiosResponse } from 'axios';
 import { Post } from 'interface';
 import { setFormSlice } from '../../../slices/form';
@@ -15,7 +14,6 @@ import { sagaActions } from 'sagas/sagaActions';
 
 const PostEdit: React.FC<{ post: Post }> = ({ post }) => {
   // URL 인자들의 key/value(키/값) 짝들의 객체를 반환
-  const { postStore } = useStores();
   const inputRef = useRef() as React.MutableRefObject<HTMLInputElement>;
   const router = useRouter();
   const form = useSelector((state: RootState) => state.form);

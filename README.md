@@ -47,7 +47,7 @@ yarn server
 
 ### 2) 프로젝트 빌드
 
-아래 명령어 입력 시, build 폴더에 빌드된 파일 (bundle.js) 생성됨
+아래 명령어 입력 시, .next 폴더에 빌드된 파일 생성됨
 
 ```
 yarn build

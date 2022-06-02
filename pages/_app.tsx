@@ -6,8 +6,6 @@ import { Provider } from 'react-redux';
 import { store } from '../store/store';
 import '../style.css';
 
-// const store: RootStoreType = new RootStore();
-
 const MyApp = ({ Component, pageProps }: AppProps): JSX.Element => {
   return (
     <>

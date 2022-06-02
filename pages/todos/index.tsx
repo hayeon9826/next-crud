@@ -45,8 +45,6 @@ const TodoPage: React.FC = () => {
     dispatch({ type: sagaActions.FETCH_TODOS });
   }, []);
 
-  console.log(todos);
-
   return (
     <>
       <div className="screen_bg">

@@ -79,7 +79,6 @@ export const getStaticProps: GetStaticProps = async () => {
 
   // Pass faq data to the page via props
   return { props: { faqs } };
-  // ...
 };
 
 export default FaqPage;
