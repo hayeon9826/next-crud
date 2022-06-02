@@ -1,34 +1,40 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import dayjs from 'dayjs';
 import { toast } from 'react-toastify';
-import { useStores } from '../../store/rootContext';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState, AppDispatch } from '../../store/store';
+import { setFormSlice } from '../../slices/form';
+import { createPost } from 'slices/post';
+import { sagaActions } from 'sagas/sagaActions';
 
 const PostNew: React.FC = () => {
-  const [form, setForm] = useState({
-    title: '',
-    body: '',
-    user: '',
-    date: dayjs().format('YYYY-MM-DD')
-  });
-  const { postStore } = useStores();
   const inputRef = useRef() as React.MutableRefObject<HTMLInputElement>;
   const router = useRouter();
+  const form = useSelector((state: RootState) => state.form);
+  // dispatchs는 액션 객체를 넘겨줘서 상태를 업데이트 하는 유일한 방법 (= 이벤트 트리거)
+  const dispatch: AppDispatch = useDispatch();
 
   const handleChange =
     (prop: string) =>
     (event: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
-      setForm({ ...form, [prop]: event.target.value });
+      dispatch(setFormSlice({ ...form, [prop]: event.target.value }));
     };
 
   const handleSubmit = async () => {
     try {
       // form validation
       if (form.user && form.title && form.body) {
-        postStore.addPost(form.title, form.body, form.user, form.date);
-        toast.success('후기를 작성했습니다.', {
-          autoClose: 1000
-        });
+        await dispatch(
+          createPost({
+            user: form.user,
+            title: form.title,
+            body: form.body,
+            date: dayjs().format('YYYY-MM-DD')
+          })
+        );
+        // 후기 생성 후 form 리셋
+        await dispatch({ type: sagaActions.RESET_FORM });
         router.replace('/');
       } else {
         // form validation

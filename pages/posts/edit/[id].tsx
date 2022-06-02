@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { GetServerSideProps } from 'next';
 import dayjs from 'dayjs';
 import { useRouter } from 'next/router';
@@ -7,24 +7,24 @@ import { toast } from 'react-toastify';
 import { useStores } from '../../../store/rootContext';
 import axios, { AxiosResponse } from 'axios';
 import { Post } from 'interface';
+import { setFormSlice } from '../../../slices/form';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState, AppDispatch } from '../../../store/store';
+import { updatePost } from 'slices/post';
+import { sagaActions } from 'sagas/sagaActions';
 
 const PostEdit: React.FC<{ post: Post }> = ({ post }) => {
   // URL 인자들의 key/value(키/값) 짝들의 객체를 반환
-  const [form, setForm] = useState({
-    title: '',
-    body: '',
-    user: '',
-    date: dayjs().format('YYYY-MM-DD')
-  });
-
   const { postStore } = useStores();
   const inputRef = useRef() as React.MutableRefObject<HTMLInputElement>;
   const router = useRouter();
+  const form = useSelector((state: RootState) => state.form);
+  const dispatch: AppDispatch = useDispatch();
 
   const handleChange =
     (prop: string) =>
     (event: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
-      setForm({ ...form, [prop]: event.target.value });
+      dispatch(setFormSlice({ ...form, [prop]: event.target.value }));
     };
 
   useEffect(() => {
@@ -33,10 +33,8 @@ const PostEdit: React.FC<{ post: Post }> = ({ post }) => {
 
   useEffect(() => {
     if (post?.id) {
-      setForm({ ...post });
+      dispatch(setFormSlice({ ...post }));
     }
-    // scroll to top
-    window.scrollTo(0, 0);
     if (inputRef && inputRef.current) {
       inputRef.current.focus();
     }
@@ -46,15 +44,19 @@ const PostEdit: React.FC<{ post: Post }> = ({ post }) => {
     try {
       // form validation
       if (form.user && form.title && form.body) {
-        await postStore.updatePost(post?.id!!, {
-          title: form.title,
-          body: form.body,
-          user: form.user,
-          date: dayjs().format('YYYY-MM-DD')
-        });
-        toast.success('후기를 수정했습니다.', {
-          autoClose: 1000
-        });
+        await dispatch(
+          updatePost({
+            id: post?.id!,
+            post: {
+              user: form.user,
+              title: form.title,
+              body: form.body,
+              date: dayjs().format('YYYY-MM-DD')
+            }
+          })
+        );
+        // 후기 수정 후 form 리셋
+        await dispatch({ type: sagaActions.RESET_FORM });
         router.back();
       } else {
         await toast.warning('모든 필드를 채워주세요.', {
@@ -121,28 +123,6 @@ const PostEdit: React.FC<{ post: Post }> = ({ post }) => {
     </div>
   );
 };
-
-// export const getStaticPaths: GetStaticPaths = async () => {
-//   const response = await axios({ url: `${BASE_URL}/post` });
-//   const data = await response.data;
-
-//   const paths = data.map(({ id }: Post) => ({
-//     params: { id: String(id) }
-//   }));
-
-//   return { paths, fallback: false };
-// };
-
-// export const getStaticProps: GetStaticProps = async ({ params }) => {
-//   const response: AxiosResponse = await axios({
-//     url: `${BASE_URL}/post/${params.id}`
-//   });
-
-//   const post: Post = response.data;
-
-//   // Pass post data to the page via props
-//   return { props: { post } };
-// };
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const response: AxiosResponse = await axios({

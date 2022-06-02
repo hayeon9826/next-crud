@@ -3,6 +3,7 @@ import createSagaMiddleware from 'redux-saga';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import posts from '../slices/post';
 import form from '../slices/form';
+import todos from '../slices/todo';
 import rootSaga from '../sagas/saga';
 import { getPostApi } from '../lib/api';
 
@@ -12,6 +13,7 @@ export const store = configureStore({
   reducer: {
     posts,
     form,
+    todos,
     // getPostApi top-level slice에서 생성된 리듀서를 추가
     [getPostApi.reducerPath]: getPostApi.reducer
   },

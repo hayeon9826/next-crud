@@ -27,7 +27,7 @@ export const getPostApi = createApi({
       query: (query) => (query ? `post/${query}` : `post/?_sort=id&_order=DESC&_limit=100`)
     }),
     getPost: builder.query<Post, string>({
-      query: (id) => `post/${id}`
+      query: (id: string) => `post/${id}`
     })
   })
 });
@@ -42,6 +42,7 @@ export const createTodo = ({ title, id, finished }: Todo) =>
 // 역순으로 최근 작성된 포스트 20개를 불러온다.
 export const getPosts = () => API.get(`${BASE_URL}/post/?_sort=id&_order=DESC&_limit=100`);
 export const getTodos = () => API.get(`${BASE_URL}/todo/?_sort=id&_order=DESC&_limit=100`);
+export const getTodo = (id: number) => API.get(`${BASE_URL}/todo/${id}`);
 export const getFaqs = () => API.get(`${BASE_URL}/faq/?_sort=id&_order=ASC&_limit=100`);
 
 export const updatePost = ({ id, post: { title, body, user, date } }: updatePostProps) =>
@@ -51,3 +52,4 @@ export const toggleTodo = ({ id, finished, title }: Todo) =>
 
 export const deletePost = (id: number) => API.delete(`${BASE_URL}/post/${id}`); // 포스트를 제거한다
 export const deleteTodo = (id: number) => API.delete(`${BASE_URL}/todo/${id}`); // todo를 제거한다
+export const { useGetPostsQuery, useGetPostQuery } = getPostApi;

@@ -3,26 +3,26 @@ import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { BASE_URL } from '../../lib/api';
-import { useStores } from '../../store/rootContext';
 import axios, { AxiosResponse } from 'axios';
-import { toast } from 'react-toastify';
 import { Post } from 'interface';
+import { useDispatch } from 'react-redux';
+import { deletePost } from '../../slices/post';
+import { AppDispatch } from 'store/store';
 
 const PostShow: React.FC<{ post: Post }> = ({ post }) => {
   // URL 인자들의 key/value(키/값) 짝들의 객체를 반환
   // const params = useParams();
   const router = useRouter();
-  const { postStore } = useStores();
+  const dispatch: AppDispatch = useDispatch();
+  // const { postStore } = useStores();
 
   const handleDelete = async () => {
     try {
-      post && post.id !== 0 && (await postStore.removePost(post.id!!));
-      toast.success('후기를 삭제했습니다.', {
-        autoClose: 1000
-      });
+      // sagas.ts의 removePostSaga 호출
+      post && post.id !== 0 && (await dispatch(deletePost(post.id!!)));
       router.replace('/');
     } catch (e) {
-      console.log(e);
+      router.replace('/');
     }
   };
 
@@ -65,23 +65,12 @@ const PostShow: React.FC<{ post: Post }> = ({ post }) => {
   );
 };
 
-// export async function getStaticPaths() {
-//   const response = await axios({ url: `${BASE_URL}/post` });
-//   const data = await response.data;
-
-//   const paths = data.map(({ id }: Post) => ({
-//     params: { id: String(id) }
-//   }));
-
-//   return { paths, fallback: false };
-// }
-
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const response: AxiosResponse = await axios({
     url: `${BASE_URL}/post/${params.id}`
   });
-
   const post: Post = response.data;
+
   // Pass post data to the page via props
   return { props: { post } };
 };

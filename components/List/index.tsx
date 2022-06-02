@@ -2,9 +2,9 @@ import React, { useEffect } from 'react';
 import { GetServerSideProps } from 'next';
 import Link from 'next/link';
 import { Post } from '../../interface';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { sagaActions } from '../../sagas/sagaActions';
-import { AppDispatch } from '../../store/store';
+import { AppDispatch, RootState } from '../../store/store';
 import * as API from '../../lib/api';
 import { AxiosResponse } from 'axios';
 
@@ -60,8 +60,9 @@ const List: React.FC<{ posts: Post[] }> = ({ posts }) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const response: AxiosResponse = await API.getPosts();
-  const posts: Post = response.data;
+  // const response: AxiosResponse = await API.getPosts();
+  // const posts: Post = response.data;
+  const posts = useSelector((state: RootState) => state.posts);
 
   // Pass post data to the page via props
   return { props: { posts } };

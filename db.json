@@ -43,8 +43,8 @@
       "id": 4
     },
     {
+      "finished": true,
       "title": "next.js 공부",
-      "finished": false,
       "id": 6
     },
     {
@@ -53,8 +53,8 @@
       "id": 7
     },
     {
-      "title": "redux 도입",
       "finished": false,
+      "title": "redux 도입",
       "id": 8
     },
     {
