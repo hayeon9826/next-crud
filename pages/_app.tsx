@@ -3,7 +3,7 @@ import { AppProps } from 'next/app';
 import Meta from '../layout/meta';
 import Layout from '../components/Layout';
 import { Provider } from 'react-redux';
-import { store } from '../store/store';
+import { store, wrapper } from '../store/store';
 import '../style.css';
 
 const MyApp = ({ Component, pageProps }: AppProps): JSX.Element => {
@@ -19,4 +19,4 @@ const MyApp = ({ Component, pageProps }: AppProps): JSX.Element => {
   );
 };
 
-export default MyApp;
+export default wrapper.withRedux(MyApp);

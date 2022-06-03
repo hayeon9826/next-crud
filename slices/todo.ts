@@ -1,6 +1,7 @@
 import { createSlice, createAction, PayloadAction } from '@reduxjs/toolkit';
 import { sagaActions } from 'sagas/sagaActions';
 import { Todo } from '../interface';
+import { HYDRATE } from 'next-redux-wrapper';
 
 const initialState: Array<Todo> = [];
 
@@ -40,6 +41,15 @@ export const todos = createSlice({
     setTodos: (state, action: PayloadAction<Todo[]>) => {
       state = action.payload;
       return state;
+    }
+  },
+  extraReducers: {
+    [HYDRATE]: (state, action) => {
+      console.log('HYDRATE', action.payload);
+      return {
+        ...state,
+        ...action.payload.todo
+      };
     }
   }
 });

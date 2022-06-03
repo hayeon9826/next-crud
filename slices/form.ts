@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Form } from '../interface';
+import { HYDRATE } from 'next-redux-wrapper';
 
 const initialState: Form = {
   id: 0,
@@ -17,6 +18,15 @@ export const form = createSlice({
     setFormSlice: (state, action: PayloadAction<Form>) => {
       state = action.payload;
       return state;
+    }
+  },
+  extraReducers: {
+    [HYDRATE]: (state, action) => {
+      console.log('HYDRATE', action.payload);
+      return {
+        ...state,
+        ...action.payload.form
+      };
     }
   }
 });

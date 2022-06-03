@@ -5,8 +5,6 @@ import { Post } from '../../interface';
 import { useDispatch, useSelector } from 'react-redux';
 import { sagaActions } from '../../sagas/sagaActions';
 import { AppDispatch, RootState } from '../../store/store';
-import * as API from '../../lib/api';
-import { AxiosResponse } from 'axios';
 
 const List: React.FC<{ posts: Post[] }> = ({ posts }) => {
   const dispatch: AppDispatch = useDispatch();

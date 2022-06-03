@@ -1,6 +1,7 @@
 import { createSlice, createAction, PayloadAction } from '@reduxjs/toolkit';
 import { sagaActions } from 'sagas/sagaActions';
 import { Post, updatePostProps } from '../interface';
+import { HYDRATE } from 'next-redux-wrapper';
 
 const initialState: Array<Post> = [];
 
@@ -39,6 +40,15 @@ export const posts = createSlice({
     setPosts: (state, action: PayloadAction<Post[]>) => {
       state = action.payload;
       return state;
+    }
+  },
+  extraReducers: {
+    [HYDRATE]: (state, action: PayloadAction<Post[]>) => {
+      console.log('HYDRATE', action.payload);
+      return {
+        ...state,
+        ...action.payload
+      };
     }
   }
 });
