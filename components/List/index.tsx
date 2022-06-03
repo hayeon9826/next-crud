@@ -1,19 +1,11 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { GetServerSideProps } from 'next';
 import Link from 'next/link';
 import { Post } from '../../interface';
-import { useDispatch, useSelector } from 'react-redux';
-import { sagaActions } from '../../sagas/sagaActions';
-import { AppDispatch, RootState } from '../../store/store';
+import { AxiosResponse } from 'axios';
+import * as API from '../../lib/api';
 
 const List: React.FC<{ posts: Post[] }> = ({ posts }) => {
-  const dispatch: AppDispatch = useDispatch();
-
-  useEffect(() => {
-    // page mount시 post 데이터 fetching. reducer로 post 세팅
-    dispatch({ type: sagaActions.FETCH_POSTS });
-  }, []);
-
   return (
     <>
       <div className="screen_bg">
@@ -58,9 +50,8 @@ const List: React.FC<{ posts: Post[] }> = ({ posts }) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  // const response: AxiosResponse = await API.getPosts();
-  // const posts: Post = response.data;
-  const posts = useSelector((state: RootState) => state.posts);
+  const response: AxiosResponse = await API.getPosts();
+  const posts: Post = response.data;
 
   // Pass post data to the page via props
   return { props: { posts } };
