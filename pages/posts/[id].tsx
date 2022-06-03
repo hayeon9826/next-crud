@@ -14,7 +14,6 @@ const PostShow: React.FC<{ post: Post }> = ({ post }) => {
   // const params = useParams();
   const router = useRouter();
   const dispatch: AppDispatch = useDispatch();
-  // const { postStore } = useStores();
 
   const handleDelete = async () => {
     try {

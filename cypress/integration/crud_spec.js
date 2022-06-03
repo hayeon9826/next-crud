@@ -13,7 +13,6 @@ context('React CRUD', () => {
   beforeEach(() => {
     cy.viewport('macbook-11');
     cy.visit(url);
-    cy.wait(1000);
   });
 
   it('리스트에서 후기 갯수 확인', () => {
@@ -33,7 +32,6 @@ context('React CRUD', () => {
     cy.get('#title-input').type(`${title}{enter}`);
     cy.get('#body-input').type(`${body}{enter}`, { force: true });
     cy.get('button').last().click();
-    cy.wait(1000);
 
     // 리스트 첫번째 후기가 방금 생성한 후기여야 함
     cy.get('.post-title')
@@ -54,7 +52,6 @@ context('React CRUD', () => {
     cy.get('.post-show-btn').first().click({ force: true });
 
     // 상세 페이지의 가장 최근 데이터가 방금 생성한 후기여야 함
-    cy.wait(1000);
     cy.get('.post-title')
       .first()
       .should(($el) => expect($el.text().trim()).to.equal(title));
@@ -72,7 +69,6 @@ context('React CRUD', () => {
   it('후기 수정하기', () => {
     // 상세 페이지 접속
     cy.get('.post-show-btn').first().click({ force: true });
-    cy.wait(1000);
     // '수정' 버튼 클릭
     cy.get('#post-edit-btn').click({ force: true });
 
@@ -84,9 +80,7 @@ context('React CRUD', () => {
     cy.get('#body-input').clear();
     cy.get('#body-input').type(`[수정] ${body}{enter}`);
     cy.get('button').last().click();
-    cy.wait(500);
     cy.visit(url);
-    cy.wait(500);
     // 리스트 첫번째 후기가 방금 수정한 후기여야 함
     cy.get('.post-title')
       .first()
@@ -105,10 +99,8 @@ context('React CRUD', () => {
   it('후기 삭제하기', () => {
     // 상세 페이지 접속
     cy.get('.post-show-btn').first().click({ force: true });
-    cy.wait(1000);
     // '삭제' 버튼 클릭
     cy.get('#post-delete-btn').click({ force: true });
-    cy.wait(500);
     // 데이터 지우고 총 갯수가 처음 리스트 갯수와 같아야 함
     cy.get('.post-title').should('have.length.greaterThan', 1).should('have.length', postCount);
   });

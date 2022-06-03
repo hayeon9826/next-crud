@@ -1,24 +1,20 @@
 import { createSlice, createAction, PayloadAction } from '@reduxjs/toolkit';
+import { sagaActions } from 'sagas/sagaActions';
 import { Todo } from '../interface';
 
 const initialState: Array<Todo> = [];
 
-// action 타입
-const CREATE_TODO = 'TODO/CREATE_TODO';
-const DELETE_TODO = 'TODO/DELETE_TODO';
-const TOGGLE_TODO = 'TODO/TOGGLE_TODO';
-
 // createAction: 주어진 액션 타입 문자열로 액션 크리에이터 함수를 생성
 // createAction의 첫번째 인자는 type
-export const createTodo = createAction(CREATE_TODO, (data: Todo) => ({
+export const createTodo = createAction(sagaActions.CREATE_TODO, (data: Todo) => ({
   payload: data
 }));
 
-export const deleteTodo = createAction(DELETE_TODO, (data: number) => ({
+export const deleteTodo = createAction(sagaActions.DELETE_TODO, (data: number) => ({
   payload: data
 }));
 
-export const toggleTodo = createAction(TOGGLE_TODO, (data: number) => ({
+export const toggleTodo = createAction(sagaActions.TOGGLE_TODO, (data: number) => ({
   payload: data
 }));
 

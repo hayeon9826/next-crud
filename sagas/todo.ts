@@ -73,7 +73,6 @@ export function* toggleTodoSaga({ payload: id }: PayloadAction<number>) {
     yield toast.success('To-do 상태를 변경했습니다.', {
       autoClose: 1000
     });
-    console.log('toggle!');
   } catch (e) {
     yield console.log(e);
     yield toast.error('문제가 발생했습니다. 다시 시도해주세요.', {

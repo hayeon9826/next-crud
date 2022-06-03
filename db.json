@@ -43,7 +43,7 @@
       "id": 4
     },
     {
-      "finished": true,
+      "finished": false,
       "title": "next.js 공부",
       "id": 6
     },
@@ -63,18 +63,13 @@
       "id": 9
     },
     {
-      "finished": false,
-      "title": "redux, saga, rtk-query 도큐 작성",
-      "id": 10
-    },
-    {
       "finished": true,
       "title": "next.js 도입",
       "id": 11
     },
     {
+      "finished": true,
       "title": "counter에 redux 도입",
-      "finished": false,
       "id": 12
     }
   ],

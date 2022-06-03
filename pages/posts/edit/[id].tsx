@@ -128,7 +128,6 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   });
 
   const post: Post = response.data;
-  // Pass post data to the page via props
   return { props: { post } };
 };
 

@@ -77,7 +77,6 @@ export const getStaticProps: GetStaticProps = async () => {
   const response: AxiosResponse = await API.getFaqs();
   const faqs: Faq = response.data;
 
-  // Pass faq data to the page via props
   return { props: { faqs } };
 };
 
